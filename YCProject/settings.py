@@ -19,6 +19,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # 配置django-jet后台
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -28,7 +31,12 @@ INSTALLED_APPS = [
     'userapp',
     'productapp',
     'orderapp',
-    'msgapp'
+    'msgapp',
+    'cartapp',
+    'daogouapp',
+    'guanliapp',
+    'memberapp',
+    'serverapp'
 ]
 
 MIDDLEWARE = [
@@ -118,13 +126,52 @@ USE_TZ = True
 
 STATIC_URL = '/s/'
 # 收集静态文件
-# STATIC_ROOT = os.path.join(BASE_DIR,'static')
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
 # 静态文件路径
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'static')
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR,'static')
+# ]
 
 
 MEDIA_URL = '/m/'  # 上传的文件
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+# 设置后台主题配置
+# JET_DEFAULT_THEME = 'light-gray'
+
+
+# 后台主体面板配色
+JET_THEMES = [
+    {
+        'theme': 'default', # theme folder name
+        'color': '#47bac1', # color of the theme's button in user menu
+        'title': 'Default' # theme title
+    },
+    {
+        'theme': 'green',
+        'color': '#44b78b',
+        'title': 'Green'
+    },
+    {
+        'theme': 'light-green',
+        'color': '#2faa60',
+        'title': 'Light Green'
+    },
+    {
+        'theme': 'light-violet',
+        'color': '#a464c4',
+        'title': 'Light Violet'
+    },
+    {
+        'theme': 'light-blue',
+        'color': '#5EADDE',
+        'title': 'Light Blue'
+    },
+    {
+        'theme': 'light-gray',
+        'color': '#222',
+        'title': 'Light Gray'
+    }
+]
+
