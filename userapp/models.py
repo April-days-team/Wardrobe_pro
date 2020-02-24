@@ -20,11 +20,6 @@ class CouponsTypes(models.Model):
 
 class User(models.Model):
 
-    realname_status = (
-        (0,'未实名认证'),
-        (1,'已实名认证')
-    )
-
     user_id = models.AutoField(primary_key=True,verbose_name='用户ID')
     username = models.CharField(max_length=50,verbose_name='用户名')
     user_password = models.CharField(max_length=30)
@@ -35,22 +30,13 @@ class User(models.Model):
     user_level = models.IntegerField()
     vip_datetime = models.CharField(max_length=20, blank=True, null=True)
     lasttime = models.CharField(max_length=20, blank=True, null=True)
-    has_realname = models.IntegerField(verbose_name='实名状态',choices=realname_status,default=0)
+    has_realname = models.IntegerField()
+    user_phone = models.IntegerField()
 
-    #实例化获取类属性
-    @property
-    def realname_state(self):
-        return self.realname_status[self.has_realname[-1]]
-
-    def __str__(self):
-        return self.username + '-' + self.user_email
 
     class Meta:
         managed = False
         db_table = 'user'
-        verbose_name = '会员管理'
-        verbose_name_plural = verbose_name
-
 
 class UserCollectStore(models.Model):
     store_id = models.IntegerField(primary_key=True)
@@ -84,6 +70,7 @@ class UserMessage(models.Model):
     user_message_time = models.DateTimeField()
     cart_name = models.CharField(max_length=50, blank=True, null=True)
     good_level = models.CharField(max_length=50, blank=True, null=True)
+
 
     class Meta:
         managed = False

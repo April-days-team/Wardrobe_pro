@@ -32,11 +32,11 @@
                 {% for role in roles %}
                     <tr class="gradeA">
                         <td>{{ role.id }}</td>
-                        <td>{{ role.name }}</td>
+                        <td>{{ role.username }}</td>
                         <td>{{ role.code }}</td>
                         <td class="center">
                             <button class="stdbtn" onclick="edit_({{ role.id }})">编辑</button>
-                            <button class="stdbtn btn_yellow" onclick="delete_({{ role.id }}, '{{ role.name }}')">删除</button>
+                            <button class="stdbtn btn_yellow" onclick="delete_({{ role.id }}, '{{ role.username }}')">删除</button>
                         </td>
                     </tr>
                 {% endfor %}

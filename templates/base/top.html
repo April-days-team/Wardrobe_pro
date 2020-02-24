@@ -1,6 +1,6 @@
 <div class="topheader">
         <div class="left">
-            <h1 class="logo">锋云<span>存储</span></h1>
+            <h1 class="logo">唯一<span>衣橱</span></h1>
             <span class="slogan">管理系统</span>
 
             <div class="search">
@@ -17,12 +17,13 @@
         <div class="right">
             <div class="userinfo">
             	<img id="head_small" src="{% if request.session.login_user.head %}/m/{{ request.session.login_user.head }}{% else %}/s/images/thumbs/avatar.png{% endif %}" alt="" />
-                <span>{{ request.session.login_user.name }}</span>
+                <span>{{ request.session.login_user.username }}</span>
             </div><!--userinfo-->
 
             <div class="userinfodrop">
             	<div class="avatar">
                 	<a href="">
+{#                    头像 #}
                         <img id="head_big" src="{% if request.session.login_user.head %}/m/{{ request.session.login_user.head }}{% else %}/s/images/thumbs/avatarbig.png{% endif %}" alt="" />
                     </a>
                     <div class="changetheme">
@@ -35,7 +36,7 @@
                     </div>
                 </div><!--avatar-->
                 <div class="userdata">
-                	<h4>{{ request.session.login_user.name }}</h4>
+                	<h4>{{ request.session.login_user.username }}</h4>
                     <h6></h6>
                     <span class="email">{{ request.session.login_user.mail }}</span>
                     <ul>
@@ -54,20 +55,57 @@
         	<li class="current"><a href="/"><span class="icon icon-flatscreen"></span>首页</a></li>
             <li><a href="messages.html"><span class="icon icon-message"></span>查看消息</a></li>
 
-            {% if request.session.login_user.code == 'admin' or request.session.login_user.code == 'mgr' %}
+            {% if request.session.login_user.code == 'admin' or request.session.login_user.code == 's_admin' %}
+                 <li><a href="reports.html"><span class="icon icon-chart"></span>系统信息<span class="">1</span></a></li>
+            {% endif %}
+        
+            {% if request.session.login_user.code == 'm_admin' or request.session.login_user.code == 'o_admin' %}
                  <li><a href="reports.html"><span class="icon icon-chart"></span>统计信息<span class="">1</span></a></li>
+            {% endif %}
+
+            {% if request.session.login_user.code == 'c_admin' %}
+                 <li><a href="reports.html"><span class="icon icon-chart"></span>合作信息<span class="">1</span></a></li>
+            {% endif %}
+
+            {% if request.session.login_user.code == 'user_admin' %}
+                 <li><a href="reports.html"><span class="icon icon-chart"></span>用户信息<span class="">1</span></a></li>
+            {% endif %}
+
+            {% if request.session.login_user.code == 'order_admin' %}
+                 <li><a href="reports.html"><span class="icon icon-chart"></span>订单信息<span class="">1</span></a></li>
+            {% endif %}
+
+
+            {% if request.session.login_user.code == 'member_admin' %}
+                 <li><a href="reports.html"><span class="icon icon-chart"></span>会员信息<span class="">1</span></a></li>
+            {% endif %}
+
+            {% if request.session.login_user.code == 'product_admin' %}
+                 <li><a href="reports.html"><span class="icon icon-chart"></span>商品信息<span class="">1</span></a></li>
+            {% endif %}
+
+            {% if request.session.login_user.code == 'cart_admin' %}
+                 <li><a href="reports.html"><span class="icon icon-chart"></span>统计信息<span class="">1</span></a></li>
+            {% endif %}
+
+            {% if request.session.login_user.code == 'daogou_admin' %}
+                 <li><a href="reports.html"><span class="icon icon-chart"></span>导购信息<span class="">1</span></a></li>
+            {% endif %}
+
+            {% if request.session.login_user.code == 'server_admin' %}
+                 <li><a href="reports.html"><span class="icon icon-chart"></span>服务信息<span class="">1</span></a></li>
             {% endif %}
         </ul>
 
        <div class="headerwidget">
         	<div class="earnings">
             	<div class="one_half">
-                	<h4>已用空间</h4>
-                    <h2>11K</h2>
+                	<h4>{{ request.session.login_user.username }}</h4>
+                    <h2>50</h2>
                 </div><!--one_half-->
                 <div class="one_half last alignright">
-                	<h4>剩余空间</h4>
-                    <h2>199M</h2>
+                	<h4>{{ request.session.login_user.nike_name }}</h4>
+                    <h2>3</h2>
                 </div><!--one_half last-->
             </div><!--earnings-->
 

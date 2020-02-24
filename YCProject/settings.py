@@ -42,7 +42,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'middleware.LoginMiddleware',  # 登录中间件
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -125,12 +125,12 @@ USE_TZ = True
 
 STATIC_URL = '/s/'
 # 收集静态文件
-STATIC_ROOT = os.path.join(BASE_DIR,'static')
+# STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
 # 静态文件路径
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR,'static')
-# ]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,'static')
+]
 
 
 MEDIA_URL = '/m/'  # 上传的文件

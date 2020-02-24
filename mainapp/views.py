@@ -1,32 +1,37 @@
+import json
+
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
-
+from django.views import View
+from mainapp.forms import RoleForm
 from common import md5_
+from guanliapp.models import *
+
+# 登录
 from userapp.models import User
 
 
-# 登录
 def login_view(request):
-
-    error = None
-
-    # 分两种用户，一种是用户，一种是管理员[系统]
+    print('---',request.method)
     if request.method == 'GET':
         return render(request,'login.html')
-    elif request.method == 'POST':
+    # 分两种用户，一种是系统管理员，一种是用户
+    if request.method == 'POST':
+        print(request.POST)
 
-        username = request.POST.get('username').strip()
-        password = request.POST.get('password').strip()
+        error = None
+
+        username = request.POST['username'].strip()
+        password = request.POST['password'].strip()
         remember = request.POST.get('remember','')  #checkbox
-
         # 对密码进行加密处理
-        password = md5_.hash_encode(password)  # 转成md5加密后的图文
-
+        password_ = md5_.hash_encode(password)  # 转成md5加密后的图文
         # 验证用户名和密码口令是否为空
         if not all((username,password)):
-            error = f'用户名或密码不能为空'
-
-        login_user = User.objects.filter(username=username,auth_string=password).first()
+            error = f'用户名或口令不能为空!'
+        login_user = SysManagerUser.objects.filter(username=username,auth_string=password_).first()
+        print(login_user)
 
         # 登录成功后，验证该用户的身份
         if login_user:
@@ -35,32 +40,79 @@ def login_view(request):
             login_info = {
                 '_id':login_user.id,
                 'name':role_.username,
-                'code':role_.code
+                'code':role_.code,
+                'nike_name':role_.nick_name,
+                'head':role_.head,
+                'mail':role_.mail
             }
         else:
-            login_user = User.objects.first(username=username,auth_string=password).first()
+            login_user = User.objects.filter((Q(username=username) or Q(user_phone=username)) and Q(user_password=password)).first()
             if login_user:
-                # 管理员(超级管理员，中级管理员，普通管理员，合作商管理员)
-                role_ = login_user.role
+                # 用户
                 login_info = {
                     '_id':login_user.id,
                     'name':login_user.username,
-                    'nick_name':login_user.nick_name
+                    'nick_name':login_user.nick_name,
+                    'mail':login_user.mail,
+                    'head':login_user.head
                 }
             else:
-                error = f'{username} 用户名或密码错误！'
+                error = f'{username} 用户名或口令错误！'
 
         if not error:
         # 如果用户名和密码都没有错误,将当前登录用户的信息存入session中
             request.session['login_user'] = login_info
-            return redirect(reverse('y:l'))
+            return redirect('/')
+
+    return render(request,'login.html',locals())
+
+# 退出
+def logout_view(request):
+    del request.session['login_user']
+    return redirect('/login/')  # 重定向到登录页面
+
 
 # 首页
 def index_view(request):
     return render(request,'dashboard.html')
 
+# 删除
+def role_del(request):
+    action = request.GET.get('action','')
+    if action == 'del':
+        SysManagerRole.objects.get(pk=request.GET.get('role_id')).delete()
+
+    roles = SysManagerRole.objects.all()
+    return render(request,'role/list.html',locals())
+
+# 编辑角色
+class EditRoleView(View):
+    def get(self,request):
+        role_id = request.GET.get('role_id','')
+        if role_id:
+            role = SysManagerRole.objects.get(pk=role_id)
+        return render(request,'role/edit.html',locals())
+
+    def post(self,request):
+        print(request.POST)
+        role_id = request.POST.get('id','')
+        if role_id:
+            form = RoleForm(request.POST,instance=SysManagerRole.objects.get(pk=role_id))
+        else:
+            form = RoleForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            # 重定向到角色管理页面
+            return redirect('/role/')
+
+        # form表单提交时错误的信息
+        errors = json.loads(form.errors.as_json())
+        return render(request,'role/edit.html',locals())
+
 # 角色管理
 def role_view(request):
-    users = User.objects.all()
+    # 系统管理员
+    users = SysManagerRole.objects.all()
     return render(request,'role/list.html',locals())
 

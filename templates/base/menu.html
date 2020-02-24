@@ -1,11 +1,12 @@
  <div class="vernav2 iconmenu">
     	<ul>
             {% if request.session.login_user.code == 'admin' %}
-                <li><a href="/settings/" class="widgets">系统配置</a></li>
+{#                系统管理员 #}
                 <li><a href="#role_menu" class="support">系统管理</a>
+
                     <span class="arrow"></span>
                     <ul id="role_menu">
-                        <li><a href="/role/">角色管理</a></li>
+                        <li><a href="/role/">管理员管理</a></li>
                         <li><a href="/list_sysuser/">系统用户</a></li>
                         <li><a href="editor.html">菜单管理</a></li>
                     </ul>
@@ -14,18 +15,133 @@
                 <li><a href="/message_audit/" class="inbox">信息审核</a></li>
             {% endif %}
 
-        {% if request.session.login_user.code == 'mgr' %}
+        {% if request.session.login_user.code == 's_admin' %}
              <li><a href="forms.html">系统配置</a></li>
+{#            超级管理员   #}
+
+            <li><a href="#role_menu" class="support">系统管理</a>
+                    <span class="arrow"></span>
+                    <ul id="role_menu">
+                        <li><a href="/role/">中级管理员</a></li>
+                        <li><a href="/list_sysuser/">系统用户</a></li>
+                        <li><a href="editor.html">菜单管理</a></li>
+                    </ul>
+                </li>
              <li><a href="elements.html" class="elements">公告管理</a></li>
              <li><a href="elements.html" class="elements">信息审核</a></li>
+
         {% endif %}
 
+        {% if request.session.login_user.code == 'm_admin' %}
+{#            中级管理员  #}
 
-        {% if request.session.login_user.code == '' %}
-            <li><a href="elements.html" class="tables">目录管理</a></li>
+            <li><a href="#role_menu" class="support">系统管理</a>
+
+                <span class="arrow"></span>
+                    <ul id="role_menu">
+                        <li><a href="/role/">普通管理员</a></li>
+                        <li><a href="/list_sysuser/">系统用户</a></li>
+                        <li><a href="editor.html">菜单管理</a></li>
+                    </ul>
+                </li>
             <li><a href="elements.html" class="gallery">文件管理</a></li>
             <li><a href="elements.html" class="calendar">图片连接</a></li>
             <li><a href="elements.html" class="addons">我的分享</a></li>
+
+        {% endif %}
+
+
+        {% if request.session.login_user.code == 'o_admin' %}
+{#            普通管理员  #}
+
+            <li><a href="#role_menu" class="support">系统管理</a>
+
+                <span class="arrow"></span>
+                    <ul id="role_menu">
+                        <li><a href="/role/">管理员</a></li>
+                        <li><a href="/list_sysuser/">系统用户</a></li>
+                        <li><a href="editor.html">菜单管理</a></li>
+                    </ul>
+                </li>
+            <li><a href="elements.html" class="calendar">图片连接</a></li>
+            <li><a href="elements.html" class="addons">我的分享</a></li>
+        {% endif %}
+
+        {% if request.session.login_user.code == 'c_admin' %}
+{#            合作商管理员  #}
+            <li><a href="elements.html" class="tables">合作项目管理</a></li>
+            <li><a href="elements.html" class="gallery">文件管理</a></li>
+            <li><a href="elements.html" class="calendar">图片连接</a></li>
+            <li><a href="elements.html" class="addons">我的分享</a></li>
+        {% endif %}
+
+        {% if request.session.login_user.code == 'member_admin' %}
+{#            会员管理员  #}
+
+            <li><a href="elements.html" class="tables">会员管理</a></li>
+            <li><a href="elements.html" class="gallery">会员信息管理</a></li>
+            <li><a href="elements.html" class="gallery">会员等级管理</a></li>
+            <li><a href="elements.html" class="gallery">会员积分管理</a></li>
+            <li><a href="elements.html" class="calendar">图片连接</a></li>
+            <li><a href="elements.html" class="addons">我的分享</a></li>
+        {% endif %}
+
+        {% if request.session.login_user.code == 'user_admin' %}
+{#            用户管理员 #}
+            <li><a href="elements.html" class="tables">用户管理</a></li>
+            <li><a href="elements.html" class="gallery">用户收藏店铺</a></li>
+            <li><a href="elements.html" class="gallery">用户购物券</a></li>
+            <li><a href="elements.html" class="gallery">会员收藏店铺管理</a></li>
+            <li><a href="elements.html" class="gallery">会员收藏店铺管理</a></li>
+            <li><a href="elements.html" class="gallery">会员收藏店铺管理</a></li>
+            <li><a href="elements.html" class="calendar">图片连接</a></li>
+            <li><a href="elements.html" class="addons">我的分享</a></li>
+        {% endif %}
+
+        {% if request.session.login_user.code == 'order_admin' %}
+{#            订单管理员 #}
+            <li><a href="elements.html" class="tables">订单地址</a></li>
+            <li><a href="elements.html" class="tables">订单详情</a></li>
+            <li><a href="elements.html" class="gallery">文件管理</a></li>
+            <li><a href="elements.html" class="calendar">图片连接</a></li>
+            <li><a href="elements.html" class="addons">我的分享</a></li>
+        {% endif %}
+
+        {% if request.session.login_user.code == 'product_admin' %}
+{#            商品管理员 #}
+            <li><a href="elements.html" class="tables">商品分类</a></li>
+            <li><a href="elements.html" class="tables">商品标签</a></li>
+            <li><a href="elements.html" class="gallery">文件管理</a></li>
+            <li><a href="elements.html" class="calendar">图片连接</a></li>
+            <li><a href="elements.html" class="addons">我的分享</a></li>
+        {% endif %}
+
+        {% if request.session.login_user.code == 'cart_admin' %}
+{#            购物车管理员 #}
+            <li><a href="elements.html" class="tables">购物车管理</a></li>
+            <li><a href="elements.html" class="gallery">文件管理</a></li>
+            <li><a href="elements.html" class="calendar">图片连接</a></li>
+            <li><a href="elements.html" class="addons">我的分享</a></li>
+        {% endif %}
+
+        {% if request.session.login_user.code == 'daogou_admin' %}
+{#            导购管理员 #}
+            <li><a href="elements.html" class="tables">导购人员</a></li>
+            <li><a href="elements.html" class="tables">导购订单</a></li>
+            <li><a href="elements.html" class="tables">导购粉丝</a></li>
+            <li><a href="elements.html" class="gallery">导购商品</a></li>
+            <li><a href="elements.html" class="calendar">导购业绩</a></li>
+            <li><a href="elements.html" class="tables">导购工单</a></li>
+        {% endif %}
+
+        {% if request.session.login_user.code == 'server_admin' %}
+{#            服务管理员 #}
+            <li><a href="elements.html" class="tables">服务人员</a></li>
+            <li><a href="elements.html" class="tables">上门定制</a></li>
+            <li><a href="elements.html" class="tables">陪同购物</a></li>
+            <li><a href="elements.html" class="gallery">形象顾问</a></li>
+            <li><a href="elements.html" class="calendar">衣橱整理</a></li>
+            <li><a href="elements.html" class="tables">店铺查询</a></li>
         {% endif %}
         </ul>
         <a class="togglemenu"></a>
