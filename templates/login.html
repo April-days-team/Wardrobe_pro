@@ -22,8 +22,8 @@
         {% if error %}
             <div class="loginmsg" style="color:lightcoral;">{{ error }}</div>
         {% endif %}
-        <form id="login" method="post">
-{#            {% csrf_token %}#}
+        <form id="login" action="{% url 'y:l' %}" method="post">
+            {% csrf_token %}
             <div class="username">
                 <div class="usernameinner">
                     <input type="text" name="username" id="username"/>
@@ -36,7 +36,7 @@
                 </div>
             </div>
 
-            <button>登录</button>
+            <input type="submit" value="登录"/>
 
             <div class="keep">
                 <input type="checkbox" name="remember" value="1" style="display: inline-block;"/> 记住密码

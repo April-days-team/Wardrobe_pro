@@ -10,10 +10,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'izu2j=%j7=+s!b#=k%rhozuv(96%6(-$r1=!j^g6=izsz^h^9v'
 
+DEFAULT_BLOCK_SIZE = 200  # 单位是M， 默认空间大小
+FRIEND_BLOCK_SIZE = 20  # 单位是M,  推荐好友扩展空间大小
+SAVE_ROOT_PATH = os.path.join(BASE_DIR, 'files')
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

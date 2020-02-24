@@ -1,17 +1,20 @@
 import json
 
 from django.db.models import Q
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
+
+from YCProject import settings
 from mainapp.forms import RoleForm
 from common import md5_
 from guanliapp.models import *
-
-# 登录
 from userapp.models import User
 
 
+# 登录
 def login_view(request):
     print('---',request.method)
     if request.method == 'GET':
@@ -32,6 +35,7 @@ def login_view(request):
             error = f'用户名或口令不能为空!'
         login_user = SysManagerUser.objects.filter(username=username,auth_string=password_).first()
         print(login_user)
+
 
         # 登录成功后，验证该用户的身份
         if login_user:
@@ -62,14 +66,35 @@ def login_view(request):
         if not error:
         # 如果用户名和密码都没有错误,将当前登录用户的信息存入session中
             request.session['login_user'] = login_info
-            return redirect('/')
+            return redirect(reverse('y:i'),locals())
 
     return render(request,'login.html',locals())
 
 # 退出
 def logout_view(request):
     del request.session['login_user']
-    return redirect('/login/')  # 重定向到登录页面
+    return redirect(reverse('y:l'))  # 重定向到登录页面
+
+
+@csrf_exempt
+def block_settings(request):
+    block_default_size = request.POST.get('block_default_size', settings.DEFAULT_BLOCK_SIZE)
+    friend_block_size = request.POST.get('friend_block_size', settings.FRIEND_BLOCK_SIZE)
+
+    if request.method == 'POST':
+        settings.DEFAULT_BLOCK_SIZE = int(block_default_size)
+        settings.FRIEND_BLOCK_SIZE = int(friend_block_size)
+
+    type_ = request.GET.get('type_', '')
+    if type_ == 'ajax':
+        return JsonResponse({
+            'block_default_size': block_default_size,
+            'friend_block_size': friend_block_size
+        })
+
+    return render(request, 'settings.html', locals())
+
+
 
 
 # 首页

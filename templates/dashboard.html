@@ -13,7 +13,7 @@
             <h1 class="pagetitle">唯一衣橱-随心所欲</h1>
             <span class="pagedesc">拥有自己的私人专柜, 享受自我！</span>
             <ul class="hornav">
-                {% if request.session.login_user.code == 'admin' or request.session.login_user.code == 'mgr' %}
+                {% if request.session.login_user.code == 'admin' or request.session.login_user.code == 's_admin' %}
                     <li class="current"><a href="#check_msg">公告审核</a></li>
                     <li><a href="#sys_settings">空间配置</a></li>
                 {% else %}
@@ -25,7 +25,7 @@
 
         <div id="contentwrapper" class="contentwrapper">
 
-            {% if request.session.login_user.code == 'admin' or request.session.login_user.code == 'mgr' %}
+            {% if request.session.login_user.code == 'admin' or request.session.login_user.code == 's_admin' %}
                 <div id="check_msg" class="subcontent">
                     <h3>待审核公告信息</h3>
                 </div>
