@@ -12,7 +12,7 @@ create table sys_manager_role(
     code varchar(5)
 );
 
-insert into sys_manager_role(name,code) values
+insert into sys_manager_role(username,code) values
     ('超级管理员','super_admin'),
     ('中级管理员','middle_admin'),
     ('普通管理员','ordinary_admin'),
@@ -98,7 +98,7 @@ create table ordinary_admin_role(
 );
 
 -- 普通管理员添加角色
-insert into ordinary_admin_role(name,code) values
+insert into ordinary_admin_role(username,code) values
     ('用户管理员',1),
     ('订单管理员',2),
     ('会员管理员',3),

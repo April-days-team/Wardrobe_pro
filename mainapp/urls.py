@@ -12,7 +12,7 @@ urlpatterns = [
 
     # path('edit_message/', views.EditMessageView.as_view()),
     # path('message_audit/', views.AuditMessage.as_view()),
-    path('edit_role/', views.EditRoleView.as_view()),
+    path('edit_role/',views.EditRoleView.as_view()),
     # path('list_sysuser/', views.list_sys_user),
     # path('edit_sysuser/', views.EditSysUserView.as_view()),
     path('index/',index_view,name='i')  # 首页

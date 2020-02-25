@@ -19,6 +19,25 @@
             <span class="slogan">YC后台管理系统</span>
         </div><!--logo-->
 
+        <hr clear="all"/><hr/>
+
+        <div class="nousername">
+            <div class="loginmsg">密码不正确</div>
+        </div>
+
+        <div class="nopassword">
+            <div class="loginmsg">密码不正确</div>
+            <div class="loginf">
+                <div class="thumb">
+                    <img alt="" src="/s/images/thumbs/avatarl.png">
+                </div>
+                <div class="userlogged">
+                    <h4></h4>
+                    <a href="index.html">Not<span>?</span></a>
+                </div>
+            </div>
+        </div>
+
         {% if error %}
             <div class="loginmsg" style="color:lightcoral;">{{ error }}</div>
         {% endif %}

@@ -1,12 +1,10 @@
 import json
-
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-
 from YCProject import settings
 from mainapp.forms import RoleForm
 from common import md5_
@@ -95,8 +93,6 @@ def block_settings(request):
     return render(request, 'settings.html', locals())
 
 
-
-
 # 首页
 def index_view(request):
     return render(request,'dashboard.html')
@@ -112,6 +108,7 @@ def role_del(request):
 
 # 编辑角色
 class EditRoleView(View):
+
     def get(self,request):
         role_id = request.GET.get('role_id','')
         if role_id:
@@ -129,7 +126,7 @@ class EditRoleView(View):
         if form.is_valid():
             form.save()
             # 重定向到角色管理页面
-            return redirect('/role/')
+            return redirect(reverse('y:r'),locals())
 
         # form表单提交时错误的信息
         errors = json.loads(form.errors.as_json())
@@ -138,6 +135,6 @@ class EditRoleView(View):
 # 角色管理
 def role_view(request):
     # 系统管理员
-    users = SysManagerRole.objects.all()
+    roles = SysManagerRole.objects.all()
     return render(request,'role/list.html',locals())
 

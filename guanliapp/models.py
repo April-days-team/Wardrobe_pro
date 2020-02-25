@@ -48,6 +48,7 @@ class SysManagerUser(models.Model):   # 系统管理员
 
 
 class SysRoleMenu(models.Model):  # 系统角色菜单
+    role_id = models.IntegerField(blank=True, null=True)
     username = models.CharField(max_length=20, blank=True, null=True)
     parent_id = models.IntegerField(blank=True, null=True)
     ord = models.IntegerField(blank=True, null=True)
@@ -110,12 +111,10 @@ class MiddleAdmin(models.Model):   # 中级管理员
         db_table = 'middle_admin'
 
 
-class OrdinaryAdminRole(models.Model):  # 普通管理员
+class OrdinaryAdminRole(models.Model):  # 普通管理员分类
     username = models.CharField(max_length=30)
-    auth_string = models.CharField(max_length=50,blank=True,null=True)
     code = models.CharField(max_length=30, blank=True, null=True)
-    head = models.CharField(max_length=20, null=True)
-    mail = models.CharField(max_length=20, null=True)
+
 
 
     class Meta:

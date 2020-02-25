@@ -1,4 +1,8 @@
 import os
+import pymysql
+
+pymysql.install_as_MySQLdb()
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -12,7 +16,7 @@ SECRET_KEY = 'izu2j=%j7=+s!b#=k%rhozuv(96%6(-$r1=!j^g6=izsz^h^9v'
 
 DEFAULT_BLOCK_SIZE = 200  # 单位是M， 默认空间大小
 FRIEND_BLOCK_SIZE = 20  # 单位是M,  推荐好友扩展空间大小
-SAVE_ROOT_PATH = os.path.join(BASE_DIR, 'files')
+SAVE_ROOT_PATH = os.path.join(BASE_DIR, 'templates','files')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!

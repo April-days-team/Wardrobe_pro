@@ -1,17 +1,22 @@
  <div class="vernav2 iconmenu">
     	<ul>
-            {% if request.session.login_user.code == 'admin' %}
-{#                系统管理员 #}
-                <li><a href="{% url 'y:s' %}" class="widgets">系统配置</a></li>
-                <li><a href="#role_menu" class="support">系统管理</a>
-                    <span class="arrow"></span>
-                    <ul id="role_menu">
-                        <li><a href="{% url 'y:r' %}">管理员管理</a></li>
-{#                        <li><a href="/list_sysuser/">系统用户</a></li>#}
-{#                        <li><a href="editor.html">菜单管理</a></li>#}
-                    </ul>
-                </li>
-            {% endif %}
+            <li><a href="#role_menu" class="editor">系统管理</a>
+                <span class="arrow"></span>
+                <ul id="role_menu">
+                    <li><a href="forms.html">基本设置</a></li>
+                    <li><a href="/role/">角色管理</a></li>
+                    <li><a href="editor.html">系统用户</a></li>
+                    <li><a href="editor.html">菜单管理</a></li>
+                </ul>
+            </li>
+            <li><a href="elements.html" class="gallery">文件管理</a></li>
+            <li><a href="elements.html" class="calendar">图片连接</a></li>
+            <li><a href="elements.html" class="addons">我的分享</a></li>
+            <li><a href="elements.html" class="elements">公告管理</a></li>
+            <li><a href="elements.html" class="elements">信息审核</a></li>
+
+
+
 
 {#        {% if request.session.login_user.code == 's_admin' %}#}
 {#             <li><a href="forms.html">系统配置</a></li>#}
@@ -144,7 +149,7 @@
         </ul>
         <a class="togglemenu"></a>
         <br /><br />
-</div><!--leftmenu-->
+    </div><!--leftmenu-->
 
 
 

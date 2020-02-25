@@ -4,6 +4,8 @@
     系统角色管理
 {% endblock %}
 
+
+
 {% block content %}
 
     <div class="centercontent tables">
@@ -53,8 +55,8 @@
 
 {% block js %}
     <script>
-        function delete_(role_id, role_name) {
-            jConfirm('是否确认删除' + role_name + "?", '删除确认', function (event) {
+        function delete_(role_id, role_username) {
+            jConfirm('是否确认删除' + role_username + "?", '删除确认', function (event) {
                 if (event) {
                     url = '?action=del&role_id=' + role_id
                     console.log(url)
