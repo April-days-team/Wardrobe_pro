@@ -13,7 +13,7 @@ urlpatterns = [
 
     path('edit_role/',views.EditRoleView.as_view()),
 
-    path('index/',index_view,name='i')  # 首页
+    path('',index_view,name='i')  # 首页
 ]
 
 
