@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 
 {% block title %}
-    系统配置
+    仓库配置
 {% endblock %}
 
 {% block css %}
@@ -26,25 +26,25 @@
             <form class="stdform stdform2" method="post">
 
                 <p>
-                    <label>用户默认空间</label>
+                    <label>仓库空间</label>
                     <span class="field">
                         {% csrf_token %}
                         <input type="text" name="block_default_size" class="longinput"
                                value="{{ block_default_size }}"/>
-                         <span style="margin-left: 10px"> 单位： M</span>
+                         <span style="margin-left: 10px"> 单位： 平方</span>
                     </span>
                 </p>
                 <p>
-                    <label>推荐好友扩展</label>
+                    <label>仓库投资升仓</label>
                     <span class="field">
 
                         <input type="text" name="friend_block_size" class="longinput"
                                value="{{ friend_block_size }}"/>
-                        <span style="margin-left: 10px"> 单位： M</span>
+                        <span style="margin-left: 10px"> 单位： 平方</span>
                     </span>
                 </p>
                 <p class="stdformbutton">
-                    <button class="submit radius2">确认修改</button>
+                    <button class="submit radius2" >确认修改</button>
                 </p>
 
             </form>
@@ -53,3 +53,4 @@
     </div>
 
 {% endblock %}
+

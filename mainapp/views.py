@@ -31,9 +31,19 @@ def login_view(request):
         # 验证用户名和密码口令是否为空
         if not all((username,password)):
             error = f'用户名或口令不能为空!'
-        login_user = SysManagerUser.objects.filter(username=username,auth_string=password_).first()
-        print(login_user)
 
+        login_user = SysManagerUser.objects.filter(username=username,auth_string=password_).first()
+        # login_user = CooperationAdmin.objects.filter(username=username,auth_string=password_).first()
+        # login_user = SuperAdmin.objects.filter(username=username,auth_string=password_).first()
+        # login_user = MiddleAdmin.objects.filter(username=username,auth_string=password_).first()
+        # login_user = UserManager.objects.filter(username=username,auth_string=password_).first()
+        # login_user = ProductManager.objects.filter(username=username,auth_string=password_).first()
+        # login_user = CartManager.objects.filter(username=username,auth_string=password_).first()
+        # login_user = DaogouManager.objects.filter(username=username,auth_string=password_).first()
+        # login_user = ServerManager.objects.filter(username=username,auth_string=password_).first()
+        # login_user = MemberManager.objects.filter(username=username,auth_string=password_).first()
+
+        print(login_user)
 
         # 登录成功后，验证该用户的身份
         if login_user:
@@ -47,6 +57,8 @@ def login_view(request):
                 'head':role_.head,
                 'mail':role_.mail
             }
+
+            print(login_info,1111)
         else:
             login_user = User.objects.filter((Q(username=username) or Q(user_phone=username)) and Q(user_password=password)).first()
             if login_user:
@@ -58,6 +70,7 @@ def login_view(request):
                     'mail':login_user.mail,
                     'head':login_user.head
                 }
+                print(login_info)
             else:
                 error = f'{username} 用户名或口令错误！'
 
@@ -106,6 +119,7 @@ def role_del(request):
     roles = SysManagerRole.objects.all()
     return render(request,'role/list.html',locals())
 
+
 # 编辑角色
 class EditRoleView(View):
 
@@ -137,5 +151,35 @@ class EditRoleView(View):
 def role_view(request):
     # 系统管理员
     roles = SysManagerRole.objects.all()
+    for role in roles:
+        print(role)
     return render(request,'role/list.html',locals())
 
+# 注册新管理员
+def regist_view(request):
+    if request.method == 'GET':
+        return render(request,'regist.html')
+    if request.method == 'POST':
+        phone = request.POST.get('phone','')
+        auth_string = request.POST.get('password')
+        nike_name = request.POST.get('nike_name')
+        mail = request.POST.get('mail')
+        # 当注册新管理员时，默认将该管理员添加至用户管理员
+        new_user = UserManager.objects.create(phone=phone,auth_string=auth_string,nike_name=nike_name,mail=mail)
+        new_user.code = 'user_admin'  # 设置新用户的code为默认的user_admin
+        new_user.save()
+        # 注册成功后跳转至登录页面
+        return redirect(reverse('y:l'))
+
+# 管理员信息
+def manager_view(request):
+    roles = OrdinaryAdminRole.objects.all()
+    return render(request,'role/manager_info.html',locals())
+
+# 合作商信息
+def cooperation_view(request):
+    return render(request,'cooperation/taobao.html')
+
+# 资料展示
+def source_view(request):
+    return render(request,'profile.html')

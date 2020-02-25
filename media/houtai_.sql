@@ -58,7 +58,7 @@ create table cooperation_admin(
     sys_id integer references sys_manager_user(id)
 );
 
-insert into cooperation_admin(name,auth_string,nick_name) values
+insert into cooperation_admin(username,auth_string,nick_name) values
     ('淘宝管理员','ba6a76245259d9fcc3c3b926d9afb1f2','淘淘');
 
 -- 以上为系统管理员相关表
@@ -73,7 +73,7 @@ create table super_admin(
 );
 
 # 超级管理员表中插入数据
-insert into super_admin(name,auth_string,nick_name) values
+insert into super_admin(username,auth_string,nick_name) values
     ('员旭','ba6a76245259d9fcc3c3b926d9afb1f2','旭哥哥');
 
 

@@ -4,7 +4,6 @@
     唯一衣橱-畅享生活！
 {% endblock %}
 
-
 {% block content %}
 
     <div class="centercontent">
@@ -15,9 +14,22 @@
             <ul class="hornav">
                 {% if request.session.login_user.code == 'admin' or request.session.login_user.code == 's_admin' %}
                     <li class="current"><a href="#check_msg">公告审核</a></li>
+                    <li><a href="#sys_settings">衣橱配置</a></li>
+                    <li><a href="#sys_settings">最近进货</a></li>
+                    <li><a href="#sys_settings">商品分类</a></li>
+                {% endif %}
+
+                {% if request.session.login_user.code == 'm_admin' or request.session.login_user.code == 'o_admin' %}
+                    <li class="current"><a href="#check_msg">公告审核</a></li>
+                    <li><a href="#sys_settings">衣橱配置</a></li>
+
+                {% endif %}
+
+                {% if request.session.login_user.code == 'c_admin' %}
+                    <li class="current"><a href="#check_msg">公告审核</a></li>
                     <li><a href="#sys_settings">空间配置</a></li>
-                {% else %}
-                    <li class="current"><a href="#near_dirs">最近使用目录</a></li>
+{#                {% else %}#}
+{#                    <li class="current"><a href="#near_dirs">最近使用目录</a></li>#}
                 {% endif %}
 
             </ul>
@@ -34,19 +46,19 @@
                     <form class="stdform stdform2" method="post">
 
                 <p>
-                    <label>用户默认空间</label>
+                    <label>仓库容量</label>
                     <span class="field">
                         {% csrf_token %}
                         <input type="text" name="block_default_size" class="longinput"/>
-                        <span style="margin-left: 10px"> 单位： M</span>
+                        <span style="margin-left: 10px"> 单位： 平方</span>
                     </span>
                 </p>
                 <p>
-                    <label>推荐好友扩展</label>
+                    <label>仓库投资增容</label>
                     <span class="field">
 
                         <input type="text" name="friend_block_size" class="longinput"/>
-                        <span style="margin-left: 10px"> 单位： M</span>
+                        <span style="margin-left: 10px"> 单位： 平方</span>
                     </span>
                 </p>
                 <p class="stdformbutton">
@@ -55,10 +67,7 @@
 
             </form>
                 </div>
-            {% else %}
-                <div id="near_dirs" class="subcontent">
-                <h3>最近使用目录</h3>
-                </div>
+
             {% endif %}
 
 

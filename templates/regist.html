@@ -27,7 +27,7 @@
     <div class="loginboxinner">
 
         <div class="logo">
-            <h1 class="logo">FMS新会员<span>注册页面</span></h1>
+            <h1 class="logo">YC管理员<span>注册页面</span></h1>
         </div><!--logo-->
 
         {% if error %}
@@ -38,7 +38,7 @@
             {% csrf_token %}
             <div class="username">
                 <div class="usernameinner">
-                    <input type="text" name="phone" value="{{ phone }}" placeholder="请输入有效的手机号"/>
+                    <input type="text" name="phone" value="{{ user_phone }}" placeholder="请输入有效的手机号"/>
                 </div>
             </div>
             <div style="display: flex;flex-flow: row;align-items: center;height: 60px">
@@ -52,7 +52,20 @@
 
             <div class="password">
                 <div class="passwordinner">
-                    <input type="password" name="password" value="{{ password }}" id="password"/>
+                    <input type="password" name="password" value="{{ auth_string }}" id="password"/>
+                </div>
+            </div>
+
+            <div class="username">
+                <div class="usernameinner">
+                    <input type="text" name="nike_name" value="{{ nike_name }}" placeholder="请输入别名"/>
+                </div>
+            </div>
+
+
+            <div class="username">
+                <div class="usernameinner">
+                    <input type="text" name="mail" value="{{ mail }}" placeholder="请输入邮箱"/>
                 </div>
             </div>
 
@@ -83,7 +96,7 @@
             return
         }
 
-        $.getJSON('/user/code/?phone=' + phone, function (msg) {
+        $.getJSON('/user/code/?phone=' + user_phone, function (msg) {
             $.toast({
                 heading: 'Success',
                 text: '短信验证码发送成功',
