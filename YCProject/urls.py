@@ -6,7 +6,7 @@ from . import settings
 
 
 urlpatterns = [
-    path('yc/',include('mainapp.urls',namespace='y')),
+    path('',include('mainapp.urls',namespace='y')),
 
 
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)  # 静态资源的路径

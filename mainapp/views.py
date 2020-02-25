@@ -132,6 +132,7 @@ class EditRoleView(View):
         errors = json.loads(form.errors.as_json())
         return render(request,'role/edit.html',locals())
 
+
 # 角色管理
 def role_view(request):
     # 系统管理员
