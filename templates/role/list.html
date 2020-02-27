@@ -18,14 +18,14 @@
 
         <div style="margin: 10px">
             <div class="contenttitle2">
-                <h3>管理员角色</h3>
+                <h3>角色类型</h3>
             </div><!--contenttitle-->
             <table cellpadding="0" cellspacing="0" border="0" class="stdtable">
                 <thead>
                 <tr>
                     <th class="head0">角色ID</th>
                     <th class="head1">名称</th>
-                    <th class="head0">代码</th>
+                    <th class="head0">地址</th>
                     <th class="head1" style="width: 300px">操作</th>
                 </tr>
                 </thead>
@@ -35,7 +35,15 @@
                     <tr class="gradeA">
                         <td>{{ role.id }}</td>
                         <td>{{ role.username }}</td>
-                        <td>{{ role.code }}</td>
+                        {% if role.username == '管理员' %}
+                            <td><a href="{% url 'y:sys' %}">{{ role.url }}</a></td>
+                        {% endif %}
+                        {% if role.username == '消费者' %}
+                            <td><a href="{% url 'm:buy' %}">{{ role.url }}</a></td>
+                        {% endif %}
+                        {% if role.username == '商家' %}
+                            <td><a href="{% url 'd:sale' %}">{{ role.url }}</a></td>
+                        {% endif %}
                         <td class="center">
                             <button class="stdbtn" onclick="edit_({{ role.id }})">编辑</button>
                             <button class="stdbtn btn_yellow" onclick="delete_({{ role.id }}, '{{ role.username }}')">删除</button>
@@ -45,9 +53,6 @@
 
                 </tbody>
             </table>
-            <div style="padding: 5px">
-                <button class="stdbtn btn_blue" onclick="window.open('/edit_role/', target='_self')">新增</button>
-            </div>
         </div>
     </div>
 

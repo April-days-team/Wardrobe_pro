@@ -1,0 +1,101 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+    会员角色管理
+{% endblock %}
+
+{% block css %}
+    <script type="text/javascript" src="/s/js/custom/forms.js"></script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="centercontent tables">
+
+        <div class="pageheader notab">
+            <h1 class="pagetitle">当前位置：会员管理</h1>
+            <span class="pagedesc">可以对会员进行删除、修改和增加</span>
+
+        </div><!--pageheader-->
+
+        <div id="basicform " style="margin: 10px" class="messagebox">
+            <div class="contenttitle2">
+                <h3>{% if role.member_id %}编辑{% else %}新增{% endif %}会员角色</h3>
+            </div><!--contenttitle-->
+
+            {% if errors %}
+                <ul style="list-style: none;margin: 5px;padding: 5px;">
+
+                    {% for error in errors.values %}
+                        <li style="color:red"> <span class="circle-dot-red"></span> {{ error.0.message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <form class="stdform stdform2" method="post">
+
+                <p>
+                    <label>买家名称</label>
+                    <span class="field">
+                        {% csrf_token %}
+                        <input type="text" name="member_name" class="longinput" value="{% if role %}{{ role.member_name }}{% else %}{{ form.username.value }}{% endif %}"/>
+                         <input type="hidden" name="member_id" value="{{ role.member_id }}">
+                    </span>
+                </p>
+
+                <p>
+                    <label>买家等级</label>
+                    <span class="field">
+                        <input type="text" name="member_level" class="longinput" value="{% if role %}{{ role.member_level }}{% else %}{{ form.username.value }}{% endif %}"/>
+                         <input type="hidden" name="member_id" value="{{ role.member_id }}">
+                    </span>
+                </p>
+                <p>
+                    <label>买家积分</label>
+                    <span class="field">
+                        <input type="text" name="member_score" class="longinput" value="{% if role %}{{ role.member_score }}{% else %}{{ form.username.value }}{% endif %}"/>
+                         <input type="hidden" name="member_id" value="{{ role.member_id }}">
+                    </span>
+                </p>
+                <p>
+                    <label>买家余额</label>
+                    <span class="field">
+                        <input type="text" name="member_balance" class="longinput" value="{% if role %}{{ role.member_balance }}{% else %}{{ form.username.value }}{% endif %}"/>
+                         <input type="hidden" name="member_id" value="{{ role.member_id }}">
+                    </span>
+                </p>
+                <p class="stdformbutton">
+                    <button class="submit radius2"><a href="{% url 'm:buy' %}">提交</a></button>
+                    <button class="submit radius2"><a href="{% url 'm:buy' %}">返回</a></button>
+                </p>
+
+            </form>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        function delete_(role_member_id,role_member_name) {
+            jConfirm('是否确认删除' + role_member_name + "?", '删除确认', function (event) {
+                if (event) {
+                    url = '?action=del&role_member_id=' + role_member_id
+                    console.log(url)
+                    window.open(url, target = '_self')
+                }
+            })
+        }
+
+        function edit_(role_member_id,role_member_name) {
+            open('/edit_role/?member_id='+role_member_id,target='_self')
+        }
+    </script>
+
+{% endblock %}
+
+
+
+
+

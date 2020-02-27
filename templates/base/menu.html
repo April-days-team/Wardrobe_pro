@@ -6,10 +6,35 @@
                 <ul id="role_menu">
                     <li><a href="{% url 'y:s' %}">仓库配置</a></li>
                     <li><a href="{% url 'y:r' %}">角色管理</a></li>
-                    <li><a href="editor.html">系统用户</a></li>
+                    <li><a href="{% url 'u:ua' %}">系统用户</a></li>
                     <li><a href="{% url 'y:source' %}">资料展示</a></li>
                 </ul>
             </li>
+            <li><a href="#role_menu" class="editor">会员管理</a><li/>
+            <span class="arrow"></span>
+                <ul id="role_menu">
+                    <li><a href="{% url 'y:s' %}">会员信息</a></li>
+                    <li><a href="{% url 'y:r' %}">会员等级</a></li>
+                </ul>
+                <ul id="role_menu">
+                    <li><a href="{% url 'y:s' %}">商品分类</a></li>
+                    <li><a href="{% url 'y:r' %}">商品标签</a></li>
+                </ul>
+            <li><a href="#role_menu" class="editor">卖家管理</a></li>
+            <span class="arrow"></span>
+                <ul id="role_menu">
+                    <li><a href="{% url 'y:s' %}">导购人员</a></li>
+                    <li><a href="{% url 'y:r' %}">导购粉丝</a></li>
+                    <li><a href="editor.html">导购会员</a></li>
+                    <li><a href="{% url 'y:source' %}">卖家订单</a></li>
+                </ul>
+            <li><a href="#role_menu" class="editor">订单管理</a></li>
+            <span class="arrow"></span>
+                <ul id="role_menu">
+                    <li><a href="{% url 'y:s' %}">订单地址</a></li>
+                    <li><a href="{% url 'y:r' %}">订单详情</a></li>
+                    <li><a href="editor.html">物流表</a></li>
+                </ul>
 
             <li><a href="elements.html" class="gallery">文件管理</a></li>
             <li><a href="elements.html" class="calendar">图片链接</a></li>

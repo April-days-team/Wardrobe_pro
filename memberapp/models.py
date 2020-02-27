@@ -14,7 +14,8 @@ class MemberInfo(models.Model):
     member_level = models.CharField(max_length=50, blank=True, null=True)
     member_score = models.CharField(max_length=50, blank=True, null=True)
     member_balance = models.CharField(max_length=50, blank=True, null=True)
-    member_authority = models.CharField(max_length=50, blank=True, null=True)
+
+
 
     class Meta:
         managed = False

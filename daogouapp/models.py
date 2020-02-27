@@ -69,3 +69,16 @@ class DPerformance(models.Model):
     class Meta:
         managed = False
         db_table = 'd_performance'
+
+
+class SaleStore(models.Model):
+    id = models.IntegerField(primary_key=True,auto_created=True)
+    store_name = models.CharField(max_length=50)
+    store_num = models.IntegerField()
+    create_time = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'sale_store'
+
+

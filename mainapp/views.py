@@ -9,6 +9,7 @@ from YCProject import settings
 from mainapp.forms import RoleForm
 from common import md5_
 from guanliapp.models import *
+from memberapp.models import MemberInfo
 from userapp.models import User
 
 
@@ -22,7 +23,6 @@ def login_view(request):
         print(request.POST)
 
         error = None
-
         username = request.POST['username'].strip()
         password = request.POST['password'].strip()
         remember = request.POST.get('remember','')  #checkbox
@@ -31,48 +31,40 @@ def login_view(request):
         # 验证用户名和密码口令是否为空
         if not all((username,password)):
             error = f'用户名或口令不能为空!'
+        try:
+            login_user = SysManagerUser.objects.filter(username=username,
+                                                   auth_string=password_).first()
 
-        login_user = SysManagerUser.objects.filter(username=username,auth_string=password_).first()
-        # login_user = CooperationAdmin.objects.filter(username=username,auth_string=password_).first()
-        # login_user = SuperAdmin.objects.filter(username=username,auth_string=password_).first()
-        # login_user = MiddleAdmin.objects.filter(username=username,auth_string=password_).first()
-        # login_user = UserManager.objects.filter(username=username,auth_string=password_).first()
-        # login_user = ProductManager.objects.filter(username=username,auth_string=password_).first()
-        # login_user = CartManager.objects.filter(username=username,auth_string=password_).first()
-        # login_user = DaogouManager.objects.filter(username=username,auth_string=password_).first()
-        # login_user = ServerManager.objects.filter(username=username,auth_string=password_).first()
-        # login_user = MemberManager.objects.filter(username=username,auth_string=password_).first()
-
-        print(login_user)
-
-        # 登录成功后，验证该用户的身份
-        if login_user:
-            # 系统管理员
-            role_ = login_user.role
-            login_info = {
-                '_id':login_user.id,
-                'name':role_.username,
-                'code':role_.code,
-                'nike_name':role_.nick_name,
-                'head':role_.head,
-                'mail':role_.mail
-            }
-
-            print(login_info,1111)
-        else:
-            login_user = User.objects.filter((Q(username=username) or Q(user_phone=username)) and Q(user_password=password)).first()
+            # 登录成功后，验证该用户的身份
             if login_user:
-                # 用户
+                # 系统管理员
+                role_ = login_user.role
                 login_info = {
                     '_id':login_user.id,
-                    'name':login_user.username,
-                    'nick_name':login_user.nick_name,
-                    'mail':login_user.mail,
-                    'head':login_user.head
+                    'name':role_.username,
+                    'code':role_.code,
+                    'nike_name':role_.nick_name,
+                    'head':role_.head,
+                    'mail':role_.mail
                 }
+
                 print(login_info)
             else:
-                error = f'{username} 用户名或口令错误！'
+                login_user = User.objects.filter((Q(username=username) or Q(user_phone=username)) and Q(auth_string=password)).first()
+                if login_user:
+                    # 用户
+                    login_info = {
+                        '_id':login_user.id,
+                        'name':login_user.username,
+                        'nick_name':login_user.nick_name,
+                        'mail':login_user.mail,
+                        'head':login_user.head
+                    }
+                    print(login_info)
+                else:
+                    error = f'{username} 用户名或口令错误！'
+        except:
+            error = '查询数据库出错，请与管理员联系'
 
         if not error:
         # 如果用户名和密码都没有错误,将当前登录用户的信息存入session中
@@ -110,13 +102,14 @@ def block_settings(request):
 def index_view(request):
     return render(request,'dashboard.html')
 
+
 # 删除
 def role_del(request):
     action = request.GET.get('action','')
     if action == 'del':
-        SysManagerRole.objects.get(pk=request.GET.get('role_id')).delete()
+        SysManagerUser.objects.get(pk=request.GET.get('role_id')).delete()
 
-    roles = SysManagerRole.objects.all()
+    roles = SysManagerUser.objects.all()
     return render(request,'role/list.html',locals())
 
 
@@ -126,14 +119,14 @@ class EditRoleView(View):
     def get(self,request):
         role_id = request.GET.get('role_id','')
         if role_id:
-            role = SysManagerRole.objects.get(pk=role_id)
+            role = SysManagerUser.objects.get(pk=role_id)
         return render(request,'role/edit.html',locals())
 
     def post(self,request):
         print(request.POST)
-        role_id = request.POST.get('id','')
+        role_id = request.POST.get('role_id','')
         if role_id:
-            form = RoleForm(request.POST,instance=SysManagerRole.objects.get(pk=role_id))
+            form = RoleForm(request.POST,instance=SysManagerUser.objects.get(pk=role_id))
         else:
             form = RoleForm(request.POST)
 
@@ -146,13 +139,28 @@ class EditRoleView(View):
         errors = json.loads(form.errors.as_json())
         return render(request,'role/edit.html',locals())
 
-
-# 角色管理
-def role_view(request):
-    # 系统管理员
+# 管理员信息
+def sys_admin_view(request):
     roles = SysManagerRole.objects.all()
-    for role in roles:
-        print(role)
+    # 删除操作
+    action = request.GET.get('action', '')
+    if action == 'del':
+        SysManagerRole.objects.get(pk=request.GET.get('role_id')).delete()
+
+    roles = SysManagerRole.objects.all()
+    return render(request,'role/sys_admin.html',locals())
+
+
+# 买家信息
+def buy_view(request):
+    # 获取买家信息【会员】
+    roles = MemberInfo.objects.all()
+    return render(request, 'memberapp/buy.html', locals())
+
+
+# 角色管理[管理员，买家，卖家]
+def role_view(request):
+    roles = SysRoleMenu.objects.all()
     return render(request,'role/list.html',locals())
 
 # 注册新管理员
@@ -171,15 +179,29 @@ def regist_view(request):
         # 注册成功后跳转至登录页面
         return redirect(reverse('y:l'))
 
-# 管理员信息
+# 普通管理员信息
 def manager_view(request):
     roles = OrdinaryAdminRole.objects.all()
     return render(request,'role/manager_info.html',locals())
 
 # 合作商信息
 def cooperation_view(request):
-    return render(request,'cooperation/taobao.html')
+    roles = CooperationAdmin.objects.all()
+    return render(request,'cooperation/taobao.html',locals())
 
 # 资料展示
 def source_view(request):
     return render(request,'profile.html')
+
+
+
+
+
+
+
+
+
+
+
+
+

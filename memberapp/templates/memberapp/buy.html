@@ -1,0 +1,78 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+    消费者信息
+{% endblock %}
+
+{% block content %}
+
+    <div class="centercontent tables">
+
+        <div class="pageheader notab">
+            <h1 class="pagetitle">当前位置：消费者信息</h1>
+            <span class="pagedesc">以下是消费者的信息</span>
+
+        </div><!--pageheader-->
+
+        <div style="margin: 10px">
+            <div class="contenttitle2">
+                <h3>消费者分类</h3>
+            </div><!--contenttitle-->
+            <table cellpadding="0" cellspacing="0" border="0" class="stdtable">
+                <thead>
+                <tr>
+                    <th class="head0">会员ID</th>
+                    <th class="head1">会员名称</th>
+                    <th class="head1">会员等级</th>
+                    <th class="head1">会员积分</th>
+                    <th class="head1">会员余额</th>
+                    <th class="head1" style="width: 300px">操作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for role in roles %}
+                    <tr class="gradeA">
+                        <td>{{ role.member_id }}</td>
+                        <td>{{ role.member_name }}</td>
+                        <td>{{ role.member_level }}</td>
+                        <td>{{ role.member_score }}</td>
+                        <td>{{ role.member_balance }}</td>
+                        <td class="center">
+                            <button class="stdbtn" onclick="edit_({{ role.member_id }})">编辑</button>
+                            <button class="stdbtn btn_yellow" onclick="delete_({{ role.member_id }}, '{{ role.member_name }}')">删除</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+            <div style="padding: 5px">
+                <button class="stdbtn btn_blue" onclick="window.open('/edit_member/', target='_self')">新增</button>
+                <button class="stdbtn btn_gray" onclick="window.open('{% url 'y:r' %}', target='_self')">返回</button>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        function delete_(role_member_id, member_name) {
+            jConfirm('是否确认删除' + member_name + "?", '删除确认', function (event) {
+                if (event) {
+                    url = '?action=del&member_id=' + member_id
+                    console.log(url)
+                    window.open(url, target = '_self')
+                }
+            })
+        }
+
+        function edit_(member_id){
+            open('/edit_role/?member_id='+member_id, targt='_self')
+        }
+
+    </script>
+{% endblock %}
+
+

@@ -1,10 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>淘宝</title>
-</head>
-<body>
-    <h3>淘宝信息</h3>
-</body>
-</html>
+{% extends 'base/base.html' %}
+
+{% block title %}
+    合作商信息
+{% endblock %}
+
+
+
+{% block content %}
+
+    <div class="centercontent tables">
+
+        <div class="pageheader notab">
+            <h1 class="pagetitle">当前位置：合作商信息</h1>
+            <span class="pagedesc">以下是合作商的信息</span>
+
+        </div><!--pageheader-->
+
+        <div style="margin: 10px">
+            <div class="contenttitle2">
+                <h3>合作商分类</h3>
+            </div><!--contenttitle-->
+            <table cellpadding="0" cellspacing="0" border="0" class="stdtable">
+                <thead>
+                <tr>
+                    <th class="head0">角色ID</th>
+                    <th class="head1">名称</th>
+                    <th class="head0">代码</th>
+                    <th class="head0">详情信息</th>
+                    <th class="head1" style="width: 300px">操作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for role in roles %}
+                    <tr class="gradeA">
+                        <td>{{ role.id }}</td>
+                        <td>{{ role.username }}</td>
+                        <td>{{ role.code }}</td>
+                        <td></td>
+                        <td class="center">
+                            <button class="stdbtn" onclick="edit_({{ role.id }})">编辑</button>
+                            <button class="stdbtn btn_yellow" onclick="delete_({{ role.id }}, '{{ role.username }}')">删除</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+            <div style="padding: 5px">
+                <button class="stdbtn btn_blue" onclick="window.open('/edit_role/', target='_self')">新增</button>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        function delete_(role_id, role_username) {
+            jConfirm('是否确认删除' + role_username + "?", '删除确认', function (event) {
+                if (event) {
+                    url = '?action=del&role_id=' + role_id
+                    console.log(url)
+                    window.open(url, target = '_self')
+                }
+            })
+        }
+
+        function edit_(role_id){
+            open('/edit_role/?role_id='+role_id, targt='_self')
+        }
+
+    </script>
+{% endblock %}
+
+

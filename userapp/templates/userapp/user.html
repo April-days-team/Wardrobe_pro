@@ -1,0 +1,82 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+    系统用户
+{% endblock %}
+
+{% block content %}
+
+    <div class="centercontent tables">
+
+        <div class="pageheader notab">
+            <h1 class="pagetitle">当前位置：系统用户信息</h1>
+            <span class="pagedesc">以下是系统用户的信息</span>
+
+        </div><!--pageheader-->
+
+        <div style="margin: 10px">
+            <div class="contenttitle2">
+                <h3>用户分类</h3>
+            </div><!--contenttitle-->
+            <table cellpadding="0" cellspacing="0" border="0" class="stdtable">
+                <thead>
+                <tr>
+                    <th class="head0">用户ID</th>
+                    <th class="head1">用户名称</th>
+                    <th class="head0">用户邮箱</th>
+                    <th class="head0">用户余额</th>
+                    <th class="head0">用户图片</th>
+                    <th class="head0">用户等级</th>
+                    <th class="head1" style="width: 300px">操作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for role in roles %}
+                    <tr class="gradeA">
+                        <td>{{ role.user_id }}</td>
+                        <td>{{ role.username }}</td>
+                        <td>{{ role.user_email }}</td>
+                        <td>{{ role.user_balabce }}</td>
+                        <td>{{ role.user_images }}</td>
+                        <td>{{ role.user_level }}</td>
+                        <td class="center">
+                            <button class="stdbtn" onclick="edit_({{ role.user_id }})">编辑</button>
+                            <button class="stdbtn btn_yellow" onclick="delete_({{ role.user_id }}, '{{ role.username }}')">删除</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+            <div style="padding: 5px">
+                <button class="stdbtn btn_blue" onclick="window.open('', target='_self')">新增</button>
+                <button class="stdbtn btn_gray" onclick="window.open('{% url 'y:i' %}', target='_self')">返回</button>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        function delete_(role_user_id, role_username) {
+            jConfirm('是否确认删除' + role_username + "?", '删除确认', function (event) {
+                if (event) {
+                    url = '?action=del&role_user_id=' + role_user_id
+                    console.log(url)
+                    window.open(url, target = '_self')
+                }
+            })
+        }
+
+        function edit_(role_user_id){
+            open('/edit_role/?role.user__id='+role.user_id, targt='_self')
+
+        }
+
+    </script>
+{% endblock %}
+
+

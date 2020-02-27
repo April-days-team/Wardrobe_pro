@@ -22,7 +22,7 @@ class User(models.Model):
 
     user_id = models.AutoField(primary_key=True,verbose_name='用户ID')
     username = models.CharField(max_length=50,verbose_name='用户名')
-    user_password = models.CharField(max_length=30)
+    auth_string = models.CharField(max_length=30)
     user_email = models.CharField(max_length=50,verbose_name='邮箱')
     user_balabce = models.CharField(max_length=100)
     is_activate = models.SmallIntegerField(null=True)
